@@ -19,13 +19,13 @@ fun Application.module() {
             val thisConnection = Connection(this)
             connections += thisConnection
             try {
-                outgoing.send(Frame.Text("You are connected! There are ${connections.count()} users here."))
+                send("You are connected! There are ${connections.count()} users here.")
                 for (frame in incoming) {
                     frame as? Frame.Text ?: continue
                     val receivedText = frame.readText()
                     val textWithUsername = "[${thisConnection.name}]: $receivedText"
                     connections.forEach {
-                        it.session.outgoing.send(Frame.Text(textWithUsername))
+                        it.session.send(textWithUsername)
                     }
                 }
             } catch (e: Exception) {
