@@ -13,7 +13,8 @@ suspend fun DefaultClientWebSocketSession.outputMessages() {
     try {
         for (message in incoming) {
             message as? Frame.Text ?: continue
-            println(message.readText())
+            val receivedText = message.readText()
+            println(receivedText)
         }
     } catch (e: Exception) {
         println("Error while receiving: " + e.localizedMessage)
