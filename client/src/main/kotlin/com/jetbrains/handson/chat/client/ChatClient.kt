@@ -5,9 +5,7 @@ import io.ktor.client.features.websocket.*
 import io.ktor.http.*
 import io.ktor.http.cio.websocket.*
 import io.ktor.util.*
-import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.*
 
 suspend fun DefaultClientWebSocketSession.outputMessages() {
     try {
@@ -26,7 +24,7 @@ suspend fun DefaultClientWebSocketSession.inputMessages() {
         val message = readLine() ?: ""
         if (message.equals("exit", true)) return
         try {
-            send(Frame.Text(message))
+            send(message)
         } catch (e: Exception) {
             println("Error while sending: " + e.localizedMessage)
             return
